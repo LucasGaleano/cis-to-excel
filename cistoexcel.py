@@ -5,7 +5,7 @@ pdfFile = open('cis.pdf','rb')
 pdf = PyPDF2.PdfFileReader(pdfFile)
 
 ID = 'Page  ([\d.]*) (.*)Profile Applicability:' 
-title = 'Page  [\d.]* (.*) (\(Scored\)|\(Not Scored\)) Profile Applicability:'
+title = 'Page  [\d.]* (.*) (\(Scored\)|\(Not Scored\))?Profile Applicability:'
 profile = 'Profile Applicability:   (.*) Description:'
 description = 'Description: (.*) Rationale:'
 rationale = 'Rationale: (.*?) (Audit:|$)'
