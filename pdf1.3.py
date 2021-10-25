@@ -8,6 +8,7 @@ args = parser.parse_args()
 
 pdf = fitz.open(args.cisDocument)
 
+end = '(P a g e|Audit:|Rationale:|Description:|Profile Applicability:|CIS Controls:|Impact:|References:|Notes:|$)'
 ID = 'P a g e\s*([\d.]*)(.*)Profile Applicability:' 
 title = 'P a g e\s*[\d.]*(.*)\s*Profile Applicability:'
 profile = 'Profile Applicability:(.*)Description:'
