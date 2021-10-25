@@ -1,51 +1,45 @@
-import PyPDF2
-import re
+import fitz
 import argparse
+import re
 
 parser = argparse.ArgumentParser()
 parser.add_argument('cisDocument', type=str)
-
 args = parser.parse_args()
 
+pdf = fitz.open(args.cisDocument)
 
-pdfFile = open(args.cisDocument,'rb')
-pdf = PyPDF2.PdfFileReader(pdfFile)
-
-ID = 'Page  ([\d.]*) (.*)Profile Applicability:' 
-title = 'Page  [\d.]* (.*) (\(Scored\)|\(Not Scored\))?Profile Applicability:'
-profile = 'Profile Applicability:   (.*) Description:'
+ID = 'P a g e\s*([\d.]*)(.*)Profile Applicability:' 
+title = 'P a g e\s*[\d.]*(.*)\s*Profile Applicability:'
+profile = 'Profile Applicability:(.*)Description:'
 description = 'Description: (.*) Rationale:'
 rationale = 'Rationale: (.*?) (Audit:|$)'
+impact = 'Impact: (.*?) (Audit:|$)'
 audit = 'Audit: (.*?)(\d* \| Page | Remediation:|$)'
 remediation = 'Remediation: (.*?)(\d* \| Page)? (CIS Controls:|Impact:|References:|Notes:|$)'
 
-fields = [ID, title, profile, description, rationale, audit, remediation]
+fields = [ID, title, profile, description, rationale, impact ,audit, remediation]
 
 
 def match(regex):    
-    #print(getText(pdf,pageNumber))
-    matchRegex = re.search(regex, getText(pdf, pageNumber), re.MULTILINE)
+    #print(page.get_text().replace('\t',' '))
+    matchRegex = re.search(regex, page.get_text().replace('\t',' ').replace('\n',' '), re.MULTILINE)
     if matchRegex:
         return matchRegex.group(1)
         #print(title, matchRegex.group(1))
-        
 
-def getText(pdf, pageNumber):
-    return pdf.getPage(pageNumber).extractText().replace('\n','')
 
 def add_row(row, item):
     if item is not None:
         row.append(item)
 
 
-print('ID, Title, Profile, Description, Rationale, Audit, Remediation')
+print('ID, Title, Profile, Description, Rationale, Impact, Audit, Remediation')
 
-for pageNumber in range(0,pdf.getNumPages()):
-    
-
+for page in pdf:
     for field in fields:
         #print('\n\n',field)
         text = match(field)
+        #print(text)
         if text is not None:
             print('"', end='')
             print(text.replace('"','""'),end='')
@@ -54,4 +48,3 @@ for pageNumber in range(0,pdf.getNumPages()):
                 print()
             else:
                 print(',', end='')
-
