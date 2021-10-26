@@ -1,0 +1,3 @@
+fitz
+pymupdf
+alive_progress
