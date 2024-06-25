@@ -13,7 +13,7 @@ pdf = PyPDF2.PdfFileReader(pdfFile)
 
 ID = r'Page\s*([\d.]*) (.*)Profile Applicability:' 
 title = r'Page\s*[\d.]* (.*) (\(Scored\)|\(Not Scored\))?Profile Applicability:'
-profile = 'Profile Applicability:   (.*) Description:'
+profile = 'Profile Applicability:\s*(.*) Description:'
 description = 'Description: (.*) Rationale:'
 rationale = 'Rationale: (.*?) (Audit:|$)'
 audit = 'Audit: (.*?)(\d* \| Page | Remediation:|$)'
