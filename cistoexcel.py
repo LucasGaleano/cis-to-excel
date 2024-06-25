@@ -11,8 +11,8 @@ args = parser.parse_args()
 pdfFile = open(args.cisDocument,'rb')
 pdf = PyPDF2.PdfFileReader(pdfFile)
 
-ID = r'Page  ([\d.]*) (.*)Profile Applicability:' 
-title = r'Page  [\d.]* (.*) (\(Scored\)|\(Not Scored\))?Profile Applicability:'
+ID = r'Page\s*([\d.]*) (.*)Profile Applicability:' 
+title = r'Page\s*[\d.]* (.*) (\(Scored\)|\(Not Scored\))?Profile Applicability:'
 profile = 'Profile Applicability:   (.*) Description:'
 description = 'Description: (.*) Rationale:'
 rationale = 'Rationale: (.*?) (Audit:|$)'
